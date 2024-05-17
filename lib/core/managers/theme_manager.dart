@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../presentation/Palette.dart';
 
 ThemeData get lightTheme => ThemeData(
+    primaryColor: Palette.primaryColor,
     scaffoldBackgroundColor: Colors.white,
     useMaterial3: false,
     appBarTheme: appBarTheme(),
@@ -12,6 +13,7 @@ ThemeData get lightTheme => ThemeData(
         backgroundColor: Palette.primaryColor));
 
 ThemeData get darkTheme => ThemeData(
+      primaryColor: Palette.primaryColor,
       scaffoldBackgroundColor: Palette.darkPrimaryColor,
       useMaterial3: false,
       appBarTheme: appBarTheme(

@@ -7,7 +7,7 @@ class CacheHelper {
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  static Future<bool?> setBool(
+  static Future<bool?> setData(
       {required String key, required dynamic value}) async {
     if (value is String) return await sharedPreferences.setString(key, value);
     if (value is int) return await sharedPreferences.setInt(key, value);
@@ -15,10 +15,6 @@ class CacheHelper {
     if (value is double) return await sharedPreferences.setDouble(key, value);
 
     return null;
-  }
-
-  static bool getBool({required String key}) {
-    return sharedPreferences.getBool(key) ?? true;
   }
 
   static dynamic getData({required String key}) {
