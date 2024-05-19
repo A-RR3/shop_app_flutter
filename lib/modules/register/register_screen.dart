@@ -35,7 +35,6 @@ class RegisterScreen extends StatelessWidget {
               CacheHelper.setData(
                       key: 'token', value: state.loginModel.data?.token)
                   .then((value) {
-                String? token = state.loginModel.data?.token;
                 NavigationServices.navigateTo(context, LoginScreen(),
                     removeAll: true);
               });
@@ -139,6 +138,7 @@ class RegisterScreen extends StatelessWidget {
                                   phone: phoneController.text,
                                 );
                               }
+                              FocusScope.of(context).unfocus();
                             },
                             child: state is RegisterLoadingState
                                 ? const CircularProgressIndicator(

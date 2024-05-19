@@ -33,7 +33,6 @@ class LoginScreen extends StatelessWidget {
               CacheHelper.setData(
                       key: 'token', value: state.loginModel.data?.token)
                   .then((value) {
-                String? token = state.loginModel.data?.token;
                 showToast(
                     meg: state.loginModel.message,
                     toastState: ToastStates.success);
@@ -110,6 +109,7 @@ class LoginScreen extends StatelessWidget {
                                   email: userEmailController.text,
                                   password: passwordController.text);
                             }
+                            FocusScope.of(context).unfocus();
                           },
                           child: state is LoginLoadingState
                               ? const CircularProgressIndicator(
