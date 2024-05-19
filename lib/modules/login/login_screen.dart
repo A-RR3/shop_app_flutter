@@ -1,36 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app_flutter/core/utils/navigation_services.dart';
-import 'package:shop_app_flutter/modules/home_page/home_screen.dart';
+import 'package:shop_app_flutter/modules/layout/shop_layout.dart';
 import 'package:shop_app_flutter/modules/register/register_screen.dart';
 import 'package:shop_app_flutter/shared/constants.dart';
+import 'package:shop_app_flutter/shared/widgets/common_text_widget.dart';
 import 'package:shop_app_flutter/shared/widgets/custom_material_botton_widget.dart';
 import 'package:shop_app_flutter/shared/widgets/custom_text_form_field.dart';
 import 'package:shop_app_flutter/shared/widgets/register_options_widget.dart';
 
+import '../../core/utils/extensions.dart';
+import '../../core/utils/validations.dart';
 import '../../shared/network/local/cache_helper.dart';
 import 'cubit/login_cubit.dart';
 import 'cubit/login_states.dart';
 
 class LoginScreen extends StatelessWidget {
   var loginFormKey = GlobalKey<FormState>();
-  var userNameController = TextEditingController();
+  var userEmailController = TextEditingController();
   var passwordController = TextEditingController();
 
   LoginScreen({super.key});
-
-  void showToast({required String meg, required ToastStates toastState}) async {
-    await Fluttertoast.showToast(
-        msg: meg,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 5,
-        backgroundColor:
-            toastState == ToastStates.error ? Colors.red : Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,16 +29,22 @@ class LoginScreen extends StatelessWidget {
       child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (BuildContext context, LoginStates state) {
           if (state is LoginSuccessState) {
-            showToast(meg: state.message, toastState: ToastStates.success);
-            CacheHelper.setData(key: 'token', value: state.userModel.token)
-                .then((value) {
-              String? token = state.userModel.token;
-              NavigationServices.navigateTo(context, const HomePage(),
-                  removeAll: true);
-            });
-          }
-          if (state is LoginErrorState) {
-            showToast(meg: state.message, toastState: ToastStates.error);
+            if (state.loginModel.status) {
+              CacheHelper.setData(
+                      key: 'token', value: state.loginModel.data?.token)
+                  .then((value) {
+                String? token = state.loginModel.data?.token;
+                showToast(
+                    meg: state.loginModel.message,
+                    toastState: ToastStates.success);
+                NavigationServices.navigateTo(context, const ShopScreen(),
+                    removeAll: true);
+              });
+            } else {
+              print(state.loginModel.message);
+              showToast(
+                  meg: state.loginModel.message, toastState: ToastStates.error);
+            }
           }
         },
         builder: (BuildContext context, LoginStates state) {
@@ -63,15 +59,7 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'LOGIN',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .copyWith(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                        ),
+                        const CommonTextWidget(text: 'LOGIN'),
                         vSpace(),
                         Text(
                           'Discover a world of products at your fingertips. Login and start shopping.',
@@ -82,47 +70,44 @@ class LoginScreen extends StatelessWidget {
                         ),
                         vSpace(40),
                         CustomTextFormField(
-                          controller: userNameController,
-                          textInputType: TextInputType.text,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter username';
-                            }
-                            return null;
-                          },
-                          hintText: 'User Name',
-                          prefixIcon: Icons.person,
+                          controller: userEmailController,
+                          textInputType: TextInputType.emailAddress,
+                          validator: (value) =>
+                              validateIsEmpty(value, 'Please enter your email'),
+                          hintText: 'User Email',
+                          prefixIcon: Icons.email,
                           border: const OutlineInputBorder(),
-                          onChanged: (String data) {},
+                          focusNode: loginCubit.emailFocus,
+                          onFieldSubmitted: (p0) => FocusScope.of(context)
+                              .requestFocus(loginCubit.passwordFocus),
+                          textInputAction: TextInputAction.next,
                         ),
                         vSpace(),
                         CustomTextFormField(
                           controller: passwordController,
                           textInputType: TextInputType.visiblePassword,
                           obscureText: !loginCubit.isPasswordShown,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            return null;
-                          },
+                          validator: (value) => validateIsEmpty(
+                              value, 'Please enter your password'),
                           hintText: 'Password',
                           prefixIcon: Icons.lock_outline,
                           suffixIcon: IconButton(
                             onPressed: () {
-                              loginCubit.showHidePassword();
+                              loginCubit.showHidePassword(
+                                  ChangePasswordVisibilityState());
                             },
                             icon: loginCubit.passwordIcon,
                           ),
                           border: const OutlineInputBorder(),
-                          onChanged: (String data) {},
+                          textInputAction: TextInputAction.done,
+                          focusNode: loginCubit.passwordFocus,
                         ),
                         vSpace(40),
                         CustomMaterialBotton(
                           onPressed: () {
                             if (loginFormKey.currentState!.validate()) {
-                              loginCubit.loginUser(
-                                  username: userNameController.text,
+                              loginCubit.userLogin(
+                                  email: userEmailController.text,
                                   password: passwordController.text);
                             }
                           },
@@ -142,7 +127,8 @@ class LoginScreen extends StatelessWidget {
                           action: 'REGISTER',
                           onPressed: () {
                             NavigationServices.navigateTo(
-                                context, const RegisterScreen());
+                                context, RegisterScreen(),
+                                removeAll: true);
                           },
                         )
                       ],

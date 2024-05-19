@@ -8,9 +8,6 @@ class DioHelper {
     dio = Dio(BaseOptions(
       baseUrl: baseUrl,
       receiveDataWhenStatusError: true,
-      validateStatus: (status) {
-        return status! < 500; // Accepts status codes less than 500 as valid
-      },
     ));
   }
 
@@ -23,7 +20,7 @@ class DioHelper {
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': lang,
-      'Authorization': token,
+      'Authorization': token ?? '',
     };
     return await dio.get(url, queryParameters: query);
   }
@@ -38,7 +35,7 @@ class DioHelper {
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': lang,
-      'Authorization': token,
+      'Authorization': token ?? '',
     };
     return await dio.post(url, data: data, queryParameters: query);
   }

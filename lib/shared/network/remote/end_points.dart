@@ -1,6 +1,6 @@
-const baseUrl = 'https://dummyjson.com/';
+const baseUrl = 'https://student.valuxapps.com/api/';
 
-const LOGIN = 'auth/login';
+const LOGIN = 'login';
 
 const REGISTER = 'register';
 

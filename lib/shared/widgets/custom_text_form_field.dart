@@ -7,21 +7,28 @@ class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final IconData prefixIcon;
   final IconButton? suffixIcon;
-  final InputBorder border;
+  final InputBorder? border;
   final TextInputType textInputType;
   final bool obscureText;
+  final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
+  final Function(String)? onFieldSubmitted;
 
-  const CustomTextFormField(
-      {super.key,
-      required this.controller,
-      this.validator,
-      required this.onChanged,
-      required this.hintText,
-      required this.prefixIcon,
-      required this.border,
-      required this.textInputType,
-      this.suffixIcon,
-      this.obscureText = false});
+  const CustomTextFormField({
+    super.key,
+    required this.controller,
+    this.validator,
+    this.onChanged,
+    required this.hintText,
+    required this.prefixIcon,
+    this.border,
+    required this.textInputType,
+    this.suffixIcon,
+    this.obscureText = false,
+    this.focusNode,
+    this.textInputAction,
+    this.onFieldSubmitted,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +41,13 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         prefixIcon: Icon(prefixIcon),
-        border: border,
+        border: border ?? const OutlineInputBorder(),
         suffixIcon: suffixIcon,
       ),
       obscureText: obscureText,
+      focusNode: focusNode,
+      textInputAction: textInputAction,
+      onFieldSubmitted: onFieldSubmitted,
     );
   }
 }

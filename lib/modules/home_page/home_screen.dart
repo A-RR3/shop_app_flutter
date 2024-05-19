@@ -1,23 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app_flutter/core/utils/navigation_services.dart';
-import 'package:shop_app_flutter/modules/login/login_screen.dart';
-import 'package:shop_app_flutter/shared/network/local/cache_helper.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+import '../../core/utils/navigation_services.dart';
+import '../../shared/network/local/cache_helper.dart';
+import '../login/login_screen.dart';
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('home page')),
       body: TextButton(
-        onPressed: () {
-          CacheHelper.removeData(key: 'token');
-          NavigationServices.navigateTo(context, LoginScreen(),
-              removeAll: true);
-        },
+        onPressed: () => signOut(context),
         child: const Text('SignOut'),
       ),
     );
+    // return BlocConsumer<ShopCubit, ShopStates>(
+    //   builder: (context, state) {
+    //     var cubit = ShopCubit.get(context);
+    //     return Scaffold(
+    //       body: TextButton(
+    //         onPressed: signOut(context),
+    //         child: Text('SignOut'),
+    //       ),
+    //     );
+    //   },
+    //   listener: (context, state) {},
+    // );
   }
+}
+
+void signOut(BuildContext cntx) async {
+  await CacheHelper.removeData(key: 'token');
+  NavigationServices.navigateTo(cntx, LoginScreen(), removeAll: true);
 }
