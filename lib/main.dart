@@ -34,7 +34,8 @@ class MyApp extends StatelessWidget {
     return BlocProvider<ShopCubit>(
         create: (context) => ShopCubit()
           ..getHomeData()
-          ..getCategoriesData(),
+          ..getCategoriesData()
+          ..getFavorites(),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           darkTheme: darkTheme,

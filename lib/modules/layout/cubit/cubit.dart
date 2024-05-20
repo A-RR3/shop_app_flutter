@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app_flutter/domain/models/FavoriteModel.dart';
 import 'package:shop_app_flutter/domain/models/categories_model.dart';
+import 'package:shop_app_flutter/domain/models/change_fav_model.dart';
 import 'package:shop_app_flutter/modules/categories/categories_screen.dart';
 import 'package:shop_app_flutter/modules/favorites/favorites_screen.dart';
 import 'package:shop_app_flutter/modules/layout/cubit/states.dart';
@@ -49,7 +51,7 @@ class ShopCubit extends Cubit<ShopStates> {
     DioHelper.getData(url: HOME, token: Constants.token).then((response) {
       homeModel = HomeModel.fromJson(response.data);
       homeModel?.data.products.forEach((element) {
-        favorites.addAll({element.id: element.inFavorites});
+        favorites.addAll({element.id: element.inFavorites!});
       });
       emit(ShopGetHomeDataSuccessState());
     }).catchError((error) {
@@ -70,6 +72,48 @@ class ShopCubit extends Cubit<ShopStates> {
       emit(ShopGetCategoriesDataSuccessState());
     }).catchError((error) {
       emit(ShopGetCategoriesDataErrorState());
+    });
+  }
+
+  ChangeFavModel? favoriteModel;
+
+  void changeFavorite(int productId) {
+    favorites[productId] = !favorites[productId]!;
+    emit(ShopChangeFavoritesLoadingState());
+
+    DioHelper.postData(
+            url: FAVORITES,
+            data: {
+              'product_id': productId,
+            },
+            token: Constants.token)
+        .then((value) {
+      favoriteModel = ChangeFavModel.fromJson(value.data);
+      if (value.data['status'] == false) {
+        favorites[productId] = !favorites[productId]!;
+        emit(ShopChangeFavoritesSuccessState(favoriteModel!.message));
+      }
+      getFavorites();
+      emit(ShopChangeFavoritesSuccessState(favoriteModel!.message));
+    }).catchError((e) {
+      print(e.toString());
+      favorites[productId] = !favorites[productId]!;
+      emit(ShopChangeFavoritesErrorState(favoriteModel!.message));
+    });
+  }
+
+  FavoriteModel? userFavorites;
+  List<Datum>? products = [];
+
+  void getFavorites() {
+    emit(ShopGetFavoritesDataLoadingState());
+    DioHelper.getData(url: FAVORITES, token: Constants.token).then((value) {
+      userFavorites = FavoriteModel.fromJson(value.data);
+      products = userFavorites!.data!.data!;
+      emit(ShopGetFavoritesDataSuccessState());
+    }).catchError((e) {
+      print(e.toString());
+      emit(ShopGetFavoritesDataErrorState(userFavorites!.message));
     });
   }
 }

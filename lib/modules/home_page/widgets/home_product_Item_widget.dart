@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app_flutter/shared/constants.dart';
 
-import '../../../domain/models/home_model.dart';
+import '../../../domain/models/product_model.dart';
 import '../../layout/cubit/cubit.dart';
 
 class HomeProductItem extends StatelessWidget {
@@ -45,7 +45,7 @@ class HomeProductItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    productModel.name,
+                    productModel.name!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -74,11 +74,17 @@ class HomeProductItem extends StatelessWidget {
                       const Spacer(),
                       IconButton(
                           onPressed: () {
-                            // shopCubit.changeFav(productModel.id);
+                            shopCubit.changeFavorite(productModel.id);
                           },
                           icon: shopCubit.favorites[productModel.id] == true
-                              ? const Icon(Icons.favorite)
-                              : const Icon(Icons.favorite_border)),
+                              ? const Icon(
+                                  Icons.favorite,
+                                  size: 30,
+                                )
+                              : const Icon(
+                                  Icons.favorite_border,
+                                  size: 30,
+                                )),
                     ],
                   ),
                 ],

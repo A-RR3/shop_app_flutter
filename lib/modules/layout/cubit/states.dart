@@ -20,13 +20,22 @@ class ShopGetFavoritesDataLoadingState extends ShopStates {}
 
 class ShopGetFavoritesDataSuccessState extends ShopStates {}
 
-class ShopGetFavoritesDataErrorState extends ShopStates {}
+class ShopGetFavoritesDataErrorState extends ShopStates {
+  final String? error;
+  ShopGetFavoritesDataErrorState(this.error);
+}
 
 class ShopChangeFavoritesLoadingState extends ShopStates {}
 
-class ShopChangeFavoritesSuccessState extends ShopStates {}
+class ShopChangeFavoritesSuccessState extends ShopStates {
+  final String message;
+  ShopChangeFavoritesSuccessState(this.message);
+}
 
-class ShopChangeFavoritesErrorState extends ShopStates {}
+class ShopChangeFavoritesErrorState extends ShopStates {
+  final String error;
+  ShopChangeFavoritesErrorState(this.error);
+}
 
 class ShopGetProfileDataLoadingState extends ShopStates {}
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../shared/constants.dart';
 import '../layout/cubit/cubit.dart';
 import '../layout/cubit/states.dart';
 import 'category_item_widget.dart';
@@ -19,8 +20,7 @@ class CategoriesScreen extends StatelessWidget {
             itemBuilder: (context, index) => CategoryItem(
                   dataModel: shopCubit.categories[index],
                 ),
-            separatorBuilder: (context, index) =>
-                const Divider(color: Colors.grey, thickness: 2),
+            separatorBuilder: (context, index) => Constants.myDivider,
             itemCount: shopCubit.categories.length);
       },
     );

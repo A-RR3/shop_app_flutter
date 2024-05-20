@@ -1,3 +1,5 @@
+import 'package:shop_app_flutter/domain/models/product_model.dart';
+
 class HomeModel {
   late bool status;
   late HomeDataModel data;
@@ -40,37 +42,4 @@ class BannerModel {
       'image': image,
     };
   }
-}
-
-class ProductModel {
-  late int id;
-  late dynamic price;
-  late dynamic oldPrice;
-  late int discount;
-  late String image;
-  late String name;
-  late bool inFavorites;
-  late bool inCart;
-
-  ProductModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    price = json['price'];
-    oldPrice = json['old_price'];
-    discount = json['discount'];
-    image = json['image'];
-    name = json['name'];
-    inFavorites = json['in_favorites'];
-    inCart = json['in_cart'];
-  }
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'price': price,
-        'old_price': oldPrice,
-        'discount': discount,
-        'image': image,
-        'name': name,
-        'in_favorites': inFavorites,
-        'in_cart': inCart,
-      };
 }
