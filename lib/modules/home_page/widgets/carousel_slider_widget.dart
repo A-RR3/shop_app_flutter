@@ -31,8 +31,8 @@ class CaroaselSlider extends StatelessWidget {
           enableInfiniteScroll: true,
           reverse: false,
           autoPlay: true,
-          autoPlayInterval: Duration(seconds: 2),
-          autoPlayAnimationDuration: Duration(milliseconds: 730),
+          autoPlayInterval: const Duration(seconds: 2),
+          autoPlayAnimationDuration: const Duration(milliseconds: 730),
           autoPlayCurve: Curves.fastOutSlowIn,
           scrollDirection: Axis.horizontal,
         ));

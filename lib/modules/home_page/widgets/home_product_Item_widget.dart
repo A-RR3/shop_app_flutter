@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app_flutter/shared/constants.dart';
 
 import '../../../domain/models/home_model.dart';
 import '../../layout/cubit/cubit.dart';
@@ -6,7 +7,7 @@ import '../../layout/cubit/cubit.dart';
 class HomeProductItem extends StatelessWidget {
   ProductModel productModel;
 
-  HomeProductItem({required this.productModel});
+  HomeProductItem({super.key, required this.productModel});
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +29,9 @@ class HomeProductItem extends StatelessWidget {
                 if (productModel.discount != 0)
                   Container(
                     color: Colors.red,
-                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                    child: Text(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    child: const Text(
                       'Discount',
                       style: TextStyle(color: Colors.white),
                     ),
@@ -46,22 +48,20 @@ class HomeProductItem extends StatelessWidget {
                     productModel.name,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.w600, height: 1.2, fontSize: 16),
                   ),
                   Row(
                     children: [
                       Text(
                         productModel.price.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
                         ),
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
+                      hSpace(10),
                       if (productModel.discount != 0)
                         Text(
                           productModel.oldPrice.toString(),
@@ -71,14 +71,14 @@ class HomeProductItem extends StatelessWidget {
                               fontSize: 12,
                               decoration: TextDecoration.lineThrough),
                         ),
-                      Spacer(),
+                      const Spacer(),
                       IconButton(
                           onPressed: () {
-                            // shopCubit .changeFav(productModel.id);
+                            // shopCubit.changeFav(productModel.id);
                           },
                           icon: shopCubit.favorites[productModel.id] == true
-                              ? Icon(Icons.favorite)
-                              : Icon(Icons.favorite_border)),
+                              ? const Icon(Icons.favorite)
+                              : const Icon(Icons.favorite_border)),
                     ],
                   ),
                 ],

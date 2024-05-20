@@ -63,16 +63,14 @@ class ProductModel {
     inCart = json['in_cart'];
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'price': price,
-      'old_price': oldPrice,
-      'discount': discount,
-      'image': image,
-      'name': name,
-      'in_favorites': inFavorites,
-      'in_cart': inCart,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'price': price,
+        'old_price': oldPrice,
+        'discount': discount,
+        'image': image,
+        'name': name,
+        'in_favorites': inFavorites,
+        'in_cart': inCart,
+      };
 }

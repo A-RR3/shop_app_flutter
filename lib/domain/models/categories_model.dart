@@ -1,10 +1,12 @@
 class CategoriesModel {
-  late bool? status;
-  late CategoriesDataModel data;
+  final bool? status;
+  final CategoriesDataModel data;
 
-  CategoriesModel.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    data = CategoriesDataModel.fromJson(json['data']);
+  CategoriesModel(this.status, this.data);
+
+  factory CategoriesModel.fromJson(Map<String, dynamic> json) {
+    return CategoriesModel(
+        json['status'], CategoriesDataModel.fromJson(json['data']));
   }
 }
 
@@ -24,6 +26,8 @@ class DataModel {
   late int id;
   late String name;
   late String image;
+
+  DataModel(this.id, this.name, this.image);
 
   DataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -4,7 +4,7 @@ import '../presentation/Palette.dart';
 
 ThemeData get lightTheme => ThemeData(
     primaryColor: Palette.primaryColor,
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: Colors.grey[200],
     useMaterial3: false,
     appBarTheme: appBarTheme(),
     bottomNavigationBarTheme: navBarTheme(),
@@ -55,4 +55,8 @@ AppBarTheme appBarTheme(
 
 TextTheme get textTheme => const TextTheme(
     bodyMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-    bodySmall: TextStyle(fontSize: 14, fontWeight: FontWeight.w500));
+    bodySmall: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+    labelMedium: TextStyle(fontSize: 23, fontWeight: FontWeight.w700),
+    labelSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+    headlineMedium: TextStyle(
+        color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25));
