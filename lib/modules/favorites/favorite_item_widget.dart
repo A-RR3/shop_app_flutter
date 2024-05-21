@@ -6,14 +6,11 @@ import '../layout/cubit/cubit.dart';
 
 class FavoriteItem extends StatelessWidget {
   final ProductModel product;
-  final Map<int, bool> favorites;
+  final Map<int, bool>? favorites;
   final bool search;
 
   const FavoriteItem(
-      {super.key,
-      required this.product,
-      required this.favorites,
-      this.search = false});
+      {super.key, required this.product, this.favorites, this.search = false});
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +82,7 @@ class FavoriteItem extends StatelessWidget {
                                 ShopCubit.get(context)
                                     .changeFavorite(product.id);
                               },
-                              icon: favorites[product.id] == true
+                              icon: favorites![product.id] == true
                                   ? const Icon(
                                       Icons.favorite,
                                       size: 30,

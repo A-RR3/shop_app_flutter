@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app_flutter/domain/models/FavoriteModel.dart';
 import 'package:shop_app_flutter/domain/models/categories_model.dart';
 import 'package:shop_app_flutter/domain/models/change_fav_model.dart';
+import 'package:shop_app_flutter/domain/models/favorite_model.dart';
 import 'package:shop_app_flutter/modules/categories/categories_screen.dart';
 import 'package:shop_app_flutter/modules/favorites/favorites_screen.dart';
 import 'package:shop_app_flutter/modules/layout/cubit/states.dart';
@@ -112,7 +112,7 @@ class ShopCubit extends Cubit<ShopStates> {
   }
 
   FavoriteModel? userFavorites;
-  List<Datum>? products = [];
+  List<Favorites>? products = [];
 
   void getFavorites() {
     emit(ShopGetFavoritesDataLoadingState());

@@ -2,7 +2,7 @@ class ProductModel {
   final int id;
   final dynamic price;
   final dynamic oldPrice;
-  final int discount;
+  final int? discount;
   final String image;
   final String? name;
   final bool? inFavorites;
@@ -13,7 +13,7 @@ class ProductModel {
       {required this.id,
       required this.price,
       required this.oldPrice,
-      required this.discount,
+      this.discount,
       required this.image,
       this.name,
       this.inFavorites,

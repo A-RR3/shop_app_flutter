@@ -37,7 +37,8 @@ class SettingsScreen extends StatelessWidget {
       },
       builder: (BuildContext context, ShopStates state) {
         ShopCubit shopCubit = ShopCubit.get(context);
-        if (state is ShopGetProfileDataSuccessState) {
+        if (state is! ShopUpdateProfileDataLoadingState ||
+            state is! ShopUpdateProfileDataSuccessState) {
           nameController.text = shopCubit.profileModel!.data!.name;
           emailController.text = shopCubit.profileModel!.data!.email;
           phoneController.text = shopCubit.profileModel!.data!.phone;
