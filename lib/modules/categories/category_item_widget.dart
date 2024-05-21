@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app_flutter/core/utils/extensions.dart';
-import 'package:shop_app_flutter/shared/constants.dart';
 
 import '../../domain/models/categories_model.dart';
+import '../../shared/constants.dart';
 
 class CategoryItem extends StatelessWidget {
   DataModel dataModel;
@@ -19,10 +19,11 @@ class CategoryItem extends StatelessWidget {
             height: 130,
             width: 130,
           ),
-          hSpace(6),
+          Constants.hSpace(6),
           Text(dataModel.name, style: context.textTheme.labelSmall),
           const Spacer(),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_forward_ios)),
+          IconButton(
+              onPressed: () {}, icon: const Icon(Icons.arrow_forward_ios)),
         ],
       ),
     );

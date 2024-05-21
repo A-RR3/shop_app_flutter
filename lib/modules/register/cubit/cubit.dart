@@ -13,7 +13,7 @@ class RegisterCubit extends Cubit<RegisterStates>
 
   static RegisterCubit get(context) => BlocProvider.of(context);
 
-  late LoginModel loginModel;
+  late ProfileModel profileModel;
   FocusNode name = FocusNode();
   FocusNode email = FocusNode();
   FocusNode password = FocusNode();
@@ -32,8 +32,8 @@ class RegisterCubit extends Cubit<RegisterStates>
       'password': password,
       'phone': phone,
     }).then((value) {
-      loginModel = LoginModel.fromJson(value.data);
-      emit(RegisterSuccessState(loginModel));
+      profileModel = ProfileModel.fromJson(value.data);
+      emit(RegisterSuccessState(profileModel));
     }).catchError((error) {
       emit(RegisterErrorState(error.toString()));
     });

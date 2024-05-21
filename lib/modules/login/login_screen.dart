@@ -9,6 +9,7 @@ import 'package:shop_app_flutter/shared/widgets/custom_material_botton_widget.da
 import 'package:shop_app_flutter/shared/widgets/custom_text_form_field.dart';
 import 'package:shop_app_flutter/shared/widgets/register_options_widget.dart';
 
+import '../../core/utils/enums/toast_enum.dart';
 import '../../core/utils/extensions.dart';
 import '../../core/utils/validations.dart';
 import '../../shared/network/local/cache_helper.dart';
@@ -29,20 +30,21 @@ class LoginScreen extends StatelessWidget {
       child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (BuildContext context, LoginStates state) {
           if (state is LoginSuccessState) {
-            if (state.loginModel.status) {
+            if (state.profileModel.status) {
               CacheHelper.setData(
-                      key: 'token', value: state.loginModel.data?.token)
+                      key: 'token', value: state.profileModel.data?.token)
                   .then((value) {
+                token = CacheHelper.getData(key: 'token');
                 showToast(
-                    meg: state.loginModel.message,
+                    meg: state.profileModel.message!,
                     toastState: ToastStates.success);
                 NavigationServices.navigateTo(context, const ShopScreen(),
                     removeAll: true);
               });
             } else {
-              print(state.loginModel.message);
               showToast(
-                  meg: state.loginModel.message, toastState: ToastStates.error);
+                  meg: state.profileModel.message!,
+                  toastState: ToastStates.error);
             }
           }
         },
@@ -59,7 +61,7 @@ class LoginScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const CommonTextWidget(text: 'LOGIN'),
-                        vSpace(),
+                        Constants.vSpace(),
                         Text(
                           'Discover a world of products at your fingertips. Login and start shopping.',
                           style: Theme.of(context)
@@ -67,7 +69,7 @@ class LoginScreen extends StatelessWidget {
                               .titleMedium!
                               .copyWith(color: Colors.grey[800]),
                         ),
-                        vSpace(40),
+                        Constants.vSpace(40),
                         CustomTextFormField(
                           controller: userEmailController,
                           textInputType: TextInputType.emailAddress,
@@ -81,7 +83,7 @@ class LoginScreen extends StatelessWidget {
                               .requestFocus(loginCubit.passwordFocus),
                           textInputAction: TextInputAction.next,
                         ),
-                        vSpace(),
+                        Constants.vSpace(),
                         CustomTextFormField(
                           controller: passwordController,
                           textInputType: TextInputType.visiblePassword,
@@ -101,7 +103,7 @@ class LoginScreen extends StatelessWidget {
                           textInputAction: TextInputAction.done,
                           focusNode: loginCubit.passwordFocus,
                         ),
-                        vSpace(40),
+                        Constants.vSpace(40),
                         CustomMaterialBotton(
                           onPressed: () {
                             if (loginFormKey.currentState!.validate()) {
@@ -115,13 +117,13 @@ class LoginScreen extends StatelessWidget {
                               ? const CircularProgressIndicator(
                                   color: Colors.white,
                                 )
-                              : const Text(
+                              : Text(
                                   'LOGIN',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
+                                  style: context.textTheme.labelSmall!
+                                      .copyWith(color: Colors.white),
                                 ),
                         ),
-                        vSpace(),
+                        Constants.vSpace(),
                         RegisterOptions(
                           question: 'You don\'t have account',
                           action: 'REGISTER',
@@ -143,5 +145,3 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-
-enum ToastStates { error, success }

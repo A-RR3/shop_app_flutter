@@ -1,3 +1,5 @@
+import 'package:shop_app_flutter/domain/models/login_model.dart';
+
 abstract class ShopStates {}
 
 class ShopInitialState extends ShopStates {}
@@ -39,12 +41,18 @@ class ShopChangeFavoritesErrorState extends ShopStates {
 
 class ShopGetProfileDataLoadingState extends ShopStates {}
 
-class ShopGetProfileDataSuccessState extends ShopStates {}
+class ShopGetProfileDataSuccessState extends ShopStates {
+  final ProfileModel? profile;
+  ShopGetProfileDataSuccessState(this.profile);
+}
 
 class ShopGetProfileDataErrorState extends ShopStates {}
 
 class ShopUpdateProfileDataLoadingState extends ShopStates {}
 
-class ShopUpdateProfileDataSuccessState extends ShopStates {}
+class ShopUpdateProfileDataSuccessState extends ShopStates {
+  final ProfileModel profile;
+  ShopUpdateProfileDataSuccessState(this.profile);
+}
 
 class ShopUpdateProfileDataErrorState extends ShopStates {}

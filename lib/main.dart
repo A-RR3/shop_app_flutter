@@ -35,7 +35,8 @@ class MyApp extends StatelessWidget {
         create: (context) => ShopCubit()
           ..getHomeData()
           ..getCategoriesData()
-          ..getFavorites(),
+          ..getFavorites()
+          ..getProfileData(),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           darkTheme: darkTheme,

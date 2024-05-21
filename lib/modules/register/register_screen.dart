@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_flutter/core/utils/navigation_services.dart';
 import 'package:shop_app_flutter/modules/login/login_screen.dart';
-import 'package:shop_app_flutter/shared/constants.dart';
 import 'package:shop_app_flutter/shared/widgets/common_text_widget.dart';
 import 'package:shop_app_flutter/shared/widgets/custom_material_botton_widget.dart';
 import 'package:shop_app_flutter/shared/widgets/custom_text_form_field.dart';
 import 'package:shop_app_flutter/shared/widgets/register_options_widget.dart';
 
+import '../../core/utils/enums/toast_enum.dart';
 import '../../core/utils/extensions.dart';
 import '../../core/utils/validations.dart';
+import '../../shared/constants.dart';
 import '../../shared/network/local/cache_helper.dart';
 import 'cubit/cubit.dart';
 import 'cubit/register_states.dart';
@@ -29,21 +30,21 @@ class RegisterScreen extends StatelessWidget {
       create: (BuildContext context) => RegisterCubit(),
       child: BlocConsumer<RegisterCubit, RegisterStates>(
         listener: (BuildContext context, RegisterStates state) {
-          print('RegisterCubit: $state');
           if (state is RegisterSuccessState) {
-            if (state.loginModel.status) {
+            if (state.profileModel.status) {
               CacheHelper.setData(
-                      key: 'token', value: state.loginModel.data?.token)
+                      key: 'token', value: state.profileModel.data?.token)
                   .then((value) {
                 NavigationServices.navigateTo(context, LoginScreen(),
                     removeAll: true);
               });
               showToast(
-                  meg: state.loginModel.message,
+                  meg: state.profileModel.message!,
                   toastState: ToastStates.success);
             } else {
               showToast(
-                  meg: state.loginModel.message, toastState: ToastStates.error);
+                  meg: state.profileModel.message!,
+                  toastState: ToastStates.error);
             }
           }
         },
@@ -61,7 +62,7 @@ class RegisterScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const CommonTextWidget(text: 'REGISTER'),
-                          vSpace(),
+                          Constants.vSpace(),
                           Text(
                             'Register and start shopping.',
                             style: Theme.of(context)
@@ -69,7 +70,7 @@ class RegisterScreen extends StatelessWidget {
                                 .titleMedium!
                                 .copyWith(color: Colors.grey[800]),
                           ),
-                          vSpace(30),
+                          Constants.vSpace(30),
                           CustomTextFormField(
                             controller: nameController,
                             hintText: 'Name',
@@ -82,7 +83,7 @@ class RegisterScreen extends StatelessWidget {
                             textInputAction: TextInputAction.next,
                             focusNode: registerCubit.name,
                           ),
-                          vSpace(),
+                          Constants.vSpace(),
                           CustomTextFormField(
                             controller: emailController,
                             hintText: 'Email',
@@ -95,7 +96,7 @@ class RegisterScreen extends StatelessWidget {
                             textInputAction: TextInputAction.next,
                             focusNode: registerCubit.email,
                           ),
-                          vSpace(),
+                          Constants.vSpace(),
                           CustomTextFormField(
                             controller: passwordController,
                             hintText: 'Password',
@@ -116,7 +117,7 @@ class RegisterScreen extends StatelessWidget {
                             textInputAction: TextInputAction.next,
                             focusNode: registerCubit.password,
                           ),
-                          vSpace(),
+                          Constants.vSpace(),
                           CustomTextFormField(
                             controller: phoneController,
                             hintText: 'Phone',
@@ -127,7 +128,7 @@ class RegisterScreen extends StatelessWidget {
                             textInputAction: TextInputAction.done,
                             focusNode: registerCubit.phone,
                           ),
-                          vSpace(40),
+                          Constants.vSpace(40),
                           CustomMaterialBotton(
                             onPressed: () {
                               if (registerFormKey.currentState!.validate()) {
@@ -150,7 +151,7 @@ class RegisterScreen extends StatelessWidget {
                                         color: Colors.white, fontSize: 20),
                                   ),
                           ),
-                          vSpace(10),
+                          Constants.vSpace(10),
                           RegisterOptions(
                               question: 'Already have an account ?',
                               action: 'LOGIN',

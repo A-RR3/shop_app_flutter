@@ -5,13 +5,10 @@ import 'package:shop_app_flutter/modules/home_page/widgets/carousel_slider_widge
 import 'package:shop_app_flutter/modules/home_page/widgets/category_item_widget.dart';
 import 'package:shop_app_flutter/modules/home_page/widgets/home_product_Item_widget.dart';
 
-import '../../core/utils/navigation_services.dart';
 import '../../shared/constants.dart';
-import '../../shared/network/local/cache_helper.dart';
 import '../../shared/widgets/common_text_widget.dart';
 import '../layout/cubit/cubit.dart';
 import '../layout/cubit/states.dart';
-import '../login/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -35,7 +32,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const CommonTextWidget(text: 'Categories'),
-                          vSpace(),
+                          Constants.vSpace(),
                           SizedBox(
                               height: context.screenSize.height * .17,
                               child: ListView.separated(
@@ -45,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                                           category:
                                               shopCubit.categories[index]),
                                   separatorBuilder: (context, index) =>
-                                      hSpace(),
+                                      Constants.hSpace(),
                                   itemCount: shopCubit.categories.length))
                         ],
                       ),
@@ -74,9 +71,4 @@ class HomeScreen extends StatelessWidget {
       listener: (context, state) {},
     );
   }
-}
-
-void signOut(BuildContext cntx) async {
-  await CacheHelper.removeData(key: 'token');
-  NavigationServices.navigateTo(cntx, LoginScreen(), removeAll: true);
 }

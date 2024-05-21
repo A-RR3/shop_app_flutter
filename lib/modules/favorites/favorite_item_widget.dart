@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app_flutter/domain/models/product_model.dart';
-import 'package:shop_app_flutter/shared/constants.dart';
 
+import '../../shared/constants.dart';
 import '../layout/cubit/cubit.dart';
 
 class FavoriteItem extends StatelessWidget {
@@ -10,7 +10,10 @@ class FavoriteItem extends StatelessWidget {
   final bool search;
 
   const FavoriteItem(
-      {super.key, required this.product, required this.favorites, this.search = false});
+      {super.key,
+      required this.product,
+      required this.favorites,
+      this.search = false});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,8 @@ class FavoriteItem extends StatelessWidget {
                 if (product.discount != 0 && !search)
                   Container(
                     color: Colors.red,
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     child: const Text(
                       'Discount',
                       style: TextStyle(color: Colors.white),
@@ -65,7 +69,7 @@ class FavoriteItem extends StatelessWidget {
                             fontSize: 14,
                           ),
                         ),
-                        hSpace(10),
+                        Constants.hSpace(10),
                         if (product.discount != 0 && !search)
                           Text(
                             product.oldPrice.toString(),

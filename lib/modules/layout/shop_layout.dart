@@ -20,12 +20,7 @@ class ShopScreen extends StatelessWidget {
               onTap: (index) {
                 cubit.changeBottomNavBar(index);
               },
-            )
-            // TextButton(
-            //   onPressed: signOut(context),
-            //   child: Text('SignOut'),
-            // ),
-            );
+            ));
       },
       listener: (context, state) {},
     );

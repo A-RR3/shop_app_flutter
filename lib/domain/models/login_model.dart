@@ -1,63 +1,55 @@
-class LoginModel {
-  late bool status;
-  late String message;
-  UserData? data;
+import 'dart:convert';
 
-  LoginModel(this.status, this.message, this.data);
+ProfileModel profileModelFromJson(String str) =>
+    ProfileModel.fromJson(json.decode(str));
 
-  LoginModel.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? UserData.fromJson(json['data']) : null;
-  }
+class ProfileModel {
+  final bool status;
+  final String? message;
+  final UserData? data;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['status'] = status;
-    map['message'] = message;
-    map['data'] ? data!.toJson : null;
-    return map;
-  }
+  ProfileModel({
+    required this.status,
+    this.message,
+    this.data,
+  });
+
+  factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
+        status: json["status"],
+        message: json["message"],
+        data: json["data"] == null ? null : UserData.fromJson(json["data"]),
+      );
 }
 
 class UserData {
-  late num _id;
-  late String _name;
-  late String _email;
-  late String _phone;
-  String? _image;
-  late num _points;
-  late num _credit;
-  late String _token;
+  final int? id;
+  final String name;
+  final String email;
+  final String phone;
+  final String? image;
+  final int? points;
+  final int? credit;
+  final String? token;
 
-  UserData.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _name = json['name'];
-    _email = json['email'];
-    _phone = json['phone'];
-    _image = json['image'] ?? '';
-    _points = json['points'];
-    _credit = json['credit'];
-    _token = json['token'];
-  }
+  UserData({
+    this.id,
+    required this.name,
+    required this.email,
+    required this.phone,
+    this.image,
+    this.points,
+    this.credit,
+    this.token,
+  });
 
-  num get id => _id;
-  String get name => _name;
-  String get email => _email;
-  String get phone => _phone;
-  String get image => _image ?? '';
-  num get points => _points;
-  num get credit => _credit;
-  String get token => _token;
-
-  Map<String, dynamic> get toJson => {
-        'id': _id,
-        'name': _name,
-        'email': _email,
-        'phone': _phone,
-        'image': _image,
-        'points': _points,
-        'credit': _credit,
-        'token': _token,
-      };
+  factory UserData.fromJson(Map<String, dynamic> json) => UserData(
+        id: json["id"],
+        name: json["name"],
+        email: json["email"],
+        phone: json["phone"],
+        image: json["image"],
+        points: json["points"],
+        credit: json["credit"],
+        token: json["token"],
+      );
 }

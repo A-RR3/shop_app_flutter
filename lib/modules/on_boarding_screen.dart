@@ -4,12 +4,12 @@ import 'package:shop_app_flutter/core/utils/navigation_services.dart';
 import 'package:shop_app_flutter/core/values/assets_keys.dart';
 import 'package:shop_app_flutter/domain/models/on_boarding_model.dart';
 import 'package:shop_app_flutter/modules/login/login_screen.dart';
-import 'package:shop_app_flutter/shared/constants.dart';
 import 'package:shop_app_flutter/shared/network/local/cache_helper.dart';
 import 'package:shop_app_flutter/shared/widgets/Boarding_item_widget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../core/presentation/Palette.dart';
+import '../shared/constants.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -67,7 +67,7 @@ class OnBoardingScreen extends StatelessWidget {
                   },
                 ),
               ),
-              vSpace(30),
+              Constants.vSpace(30),
               Row(
                 children: [
                   SmoothPageIndicator(
