@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core/values/lang_keys.dart';
 import '../../shared/constants.dart';
 import '../layout/cubit/cubit.dart';
 import '../layout/cubit/states.dart';
@@ -21,8 +23,7 @@ class FavoritesScreen extends StatelessWidget {
           } else {
             return shopCubit.userFavorites == null ||
                     shopCubit.userFavorites!.data!.data!.isEmpty
-                ? const Center(
-                    child: Text('you don\'t have favorites right now'))
+                ? Center(child: Text(LangKeys.YOU_DONT_HAVE_FAVORITES.tr()))
                 : ListView.separated(
                     itemBuilder: (context, index) => FavoriteItem(
                         product: shopCubit.products![index].product,

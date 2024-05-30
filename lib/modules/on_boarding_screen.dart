@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app_flutter/core/utils/extensions.dart';
 import 'package:shop_app_flutter/core/utils/navigation_services.dart';
 import 'package:shop_app_flutter/core/values/assets_keys.dart';
+import 'package:shop_app_flutter/core/values/lang_keys.dart';
 import 'package:shop_app_flutter/domain/models/on_boarding_model.dart';
 import 'package:shop_app_flutter/modules/login/login_screen.dart';
 import 'package:shop_app_flutter/shared/network/local/cache_helper.dart';
@@ -11,22 +13,32 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../core/presentation/Palette.dart';
 import '../shared/constants.dart';
 
-class OnBoardingScreen extends StatelessWidget {
-  const OnBoardingScreen({super.key});
+class OnBoardingScreen extends StatefulWidget {
+  OnBoardingScreen({super.key});
+  bool isLast = false;
 
+  @override
+  State<OnBoardingScreen> createState() => _OnBoardingScreenState();
+}
+
+class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     var controller = PageController();
     List<OnBoardingModel> boardings = [
       OnBoardingModel(
-          image: AssetsKeys.ON_BOARDING_IMG, title: 'title1', body: 'body1'),
+          image: AssetsKeys.ON_BOARDING_IMG,
+          title: LangKeys.TITLE_1,
+          body: LangKeys.CONTENT),
       OnBoardingModel(
-          image: AssetsKeys.ON_BOARDING_IMG, title: 'title2', body: 'body2'),
+          image: AssetsKeys.ON_BOARDING_IMG,
+          title: LangKeys.TITLE_2,
+          body: LangKeys.CONTENT),
       OnBoardingModel(
-          image: AssetsKeys.ON_BOARDING_IMG, title: 'title3', body: 'body3')
+          image: AssetsKeys.ON_BOARDING_IMG,
+          title: LangKeys.TITLE_3,
+          body: LangKeys.CONTENT)
     ];
-
-    bool isLast = false;
 
     void submit() {
       CacheHelper.setData(key: 'onBoarding', value: false);
@@ -39,7 +51,7 @@ class OnBoardingScreen extends StatelessWidget {
             TextButton(
                 onPressed: submit,
                 child: Text(
-                  'Skip',
+                  LangKeys.SKIP.tr(),
                   style: context.textTheme.labelLarge!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Palette.primaryColor,
@@ -60,9 +72,9 @@ class OnBoardingScreen extends StatelessWidget {
                   itemCount: 3,
                   onPageChanged: (index) {
                     if (index == boardings.length - 1) {
-                      isLast = true;
+                      widget.isLast = true;
                     } else {
-                      isLast = false;
+                      widget.isLast = false;
                     }
                   },
                 ),
@@ -84,8 +96,8 @@ class OnBoardingScreen extends StatelessWidget {
                   const Spacer(),
                   FloatingActionButton(
                     onPressed: () {
-                      isLast
-                          ? submit
+                      (widget.isLast)
+                          ? submit()
                           : controller.nextPage(
                               duration: const Duration(milliseconds: 730),
                               curve: Curves.fastLinearToSlowEaseIn);

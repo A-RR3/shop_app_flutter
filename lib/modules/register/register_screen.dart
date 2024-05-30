@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_flutter/core/utils/navigation_services.dart';
+import 'package:shop_app_flutter/core/values/local_storage_keys.dart';
 import 'package:shop_app_flutter/modules/login/login_screen.dart';
 import 'package:shop_app_flutter/shared/widgets/common_text_widget.dart';
 import 'package:shop_app_flutter/shared/widgets/custom_material_botton_widget.dart';
@@ -8,8 +10,9 @@ import 'package:shop_app_flutter/shared/widgets/custom_text_form_field.dart';
 import 'package:shop_app_flutter/shared/widgets/register_options_widget.dart';
 
 import '../../core/utils/enums/toast_enum.dart';
-import '../../core/utils/extensions.dart';
 import '../../core/utils/validations.dart';
+import '../../core/values/constants.dart';
+import '../../core/values/lang_keys.dart';
 import '../../shared/constants.dart';
 import '../../shared/network/local/cache_helper.dart';
 import 'cubit/cubit.dart';
@@ -33,7 +36,8 @@ class RegisterScreen extends StatelessWidget {
           if (state is RegisterSuccessState) {
             if (state.profileModel.status) {
               CacheHelper.setData(
-                      key: 'token', value: state.profileModel.data?.token)
+                      key: LocalStorageKeys.ACCESS_TOKEN,
+                      value: state.profileModel.data?.token)
                   .then((value) {
                 NavigationServices.navigateTo(context, LoginScreen(),
                     removeAll: true);
@@ -61,10 +65,10 @@ class RegisterScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const CommonTextWidget(text: 'REGISTER'),
+                          CommonTextWidget(text: LangKeys.REGISTER.tr()),
                           Constants.vSpace(),
                           Text(
-                            'Register and start shopping.',
+                            LangKeys.REGISTER_OPENING_STATEMENT.tr(),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
@@ -73,11 +77,11 @@ class RegisterScreen extends StatelessWidget {
                           Constants.vSpace(30),
                           CustomTextFormField(
                             controller: nameController,
-                            hintText: 'Name',
+                            hintText: LangKeys.NAME.tr(),
                             prefixIcon: Icons.person,
                             textInputType: TextInputType.text,
                             validator: (value) => validateIsEmpty(
-                                value, 'Please enter your name'),
+                                value, LangKeys.ENTER_YOUR_NAME.tr()),
                             onFieldSubmitted: (p0) => FocusScope.of(context)
                                 .requestFocus(registerCubit.email),
                             textInputAction: TextInputAction.next,
@@ -86,11 +90,11 @@ class RegisterScreen extends StatelessWidget {
                           Constants.vSpace(),
                           CustomTextFormField(
                             controller: emailController,
-                            hintText: 'Email',
+                            hintText: LangKeys.EMAIL.tr(),
                             prefixIcon: Icons.email_outlined,
                             textInputType: TextInputType.emailAddress,
                             validator: (value) => validateIsEmpty(
-                                value, 'Please enter your email'),
+                                value, LangKeys.ENTER_EMAIL.tr()),
                             onFieldSubmitted: (p0) => FocusScope.of(context)
                                 .requestFocus(registerCubit.password),
                             textInputAction: TextInputAction.next,
@@ -99,11 +103,11 @@ class RegisterScreen extends StatelessWidget {
                           Constants.vSpace(),
                           CustomTextFormField(
                             controller: passwordController,
-                            hintText: 'Password',
+                            hintText: LangKeys.PASSWORD.tr(),
                             prefixIcon: Icons.lock_outline,
                             textInputType: TextInputType.visiblePassword,
                             validator: (value) => validateIsEmpty(
-                                value, 'Please enter your password'),
+                                value, LangKeys.ENTER_PASSWORD.tr()),
                             obscureText: !registerCubit.isPasswordShown,
                             suffixIcon: IconButton(
                               onPressed: () {
@@ -120,11 +124,11 @@ class RegisterScreen extends StatelessWidget {
                           Constants.vSpace(),
                           CustomTextFormField(
                             controller: phoneController,
-                            hintText: 'Phone',
+                            hintText: LangKeys.PHONE.tr(),
                             prefixIcon: Icons.phone,
                             textInputType: TextInputType.phone,
                             validator: (value) => validateIsEmpty(
-                                value, 'Please enter your phone number'),
+                                value, LangKeys.ENTER_PHONE_NUMBER.tr()),
                             textInputAction: TextInputAction.done,
                             focusNode: registerCubit.phone,
                           ),
@@ -145,16 +149,16 @@ class RegisterScreen extends StatelessWidget {
                                 ? const CircularProgressIndicator(
                                     color: Colors.white,
                                   )
-                                : const Text(
-                                    'Register',
+                                : Text(
+                                    LangKeys.REGISTER.tr(),
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 20),
                                   ),
                           ),
                           Constants.vSpace(10),
                           RegisterOptions(
-                              question: 'Already have an account ?',
-                              action: 'LOGIN',
+                              question: LangKeys.ALREADY_HAVE_ACCOUNT.tr(),
+                              action: LangKeys.LOGIN.tr(),
                               onPressed: () => NavigationServices.navigateTo(
                                   context, LoginScreen(),
                                   removeAll: true))

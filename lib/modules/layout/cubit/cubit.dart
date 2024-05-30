@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_flutter/domain/models/categories_model.dart';
@@ -10,6 +11,7 @@ import 'package:shop_app_flutter/modules/settings/settings_screen.dart';
 import 'package:shop_app_flutter/shared/constants.dart';
 
 import '../../../core/utils/navigation_services.dart';
+import '../../../core/values/lang_keys.dart';
 import '../../../domain/models/home_model.dart';
 import '../../../domain/models/login_model.dart';
 import '../../../shared/network/local/cache_helper.dart';
@@ -26,12 +28,13 @@ class ShopCubit extends Cubit<ShopStates> {
   int currentIndex = 0;
 
   List<BottomNavigationBarItem> items = [
-    const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-    const BottomNavigationBarItem(icon: Icon(Icons.apps), label: 'categories'),
-    const BottomNavigationBarItem(
-        icon: Icon(Icons.favorite), label: 'favorites'),
-    const BottomNavigationBarItem(
-        icon: Icon(Icons.settings), label: 'settings'),
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: LangKeys.HOME.tr()),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.apps), label: LangKeys.CATEGORIES.tr()),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.favorite), label: LangKeys.FAVORITES.tr()),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.settings), label: LangKeys.SETTINGS.tr()),
   ];
 
   List<Widget> screens = [

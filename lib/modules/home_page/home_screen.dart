@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_flutter/core/utils/extensions.dart';
@@ -5,6 +6,7 @@ import 'package:shop_app_flutter/modules/home_page/widgets/carousel_slider_widge
 import 'package:shop_app_flutter/modules/home_page/widgets/category_item_widget.dart';
 import 'package:shop_app_flutter/modules/home_page/widgets/home_product_Item_widget.dart';
 
+import '../../core/values/lang_keys.dart';
 import '../../shared/constants.dart';
 import '../../shared/widgets/common_text_widget.dart';
 import '../layout/cubit/cubit.dart';
@@ -31,7 +33,8 @@ class HomeScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const CommonTextWidget(text: 'Categories'),
+                          CommonTextWidget(
+                              text: LangKeys.CATEGORIES_HEADING.tr()),
                           Constants.vSpace(),
                           SizedBox(
                               height: context.screenSize.height * .17,

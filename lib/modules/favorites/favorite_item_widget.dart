@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app_flutter/domain/models/product_model.dart';
 
+import '../../core/values/lang_keys.dart';
 import '../../shared/constants.dart';
 import '../layout/cubit/cubit.dart';
 
@@ -33,8 +35,8 @@ class FavoriteItem extends StatelessWidget {
                     color: Colors.red,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                    child: const Text(
-                      'Discount',
+                    child: Text(
+                      LangKeys.DISCOUNT.tr(),
                       style: TextStyle(color: Colors.white),
                     ),
                   ),

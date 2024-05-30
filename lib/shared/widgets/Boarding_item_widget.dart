@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shop_app_flutter/core/utils/extensions.dart';
 import 'package:shop_app_flutter/domain/models/on_boarding_model.dart';
@@ -18,11 +19,11 @@ class BordingItemWidget extends StatelessWidget {
               Image.asset(AssetsKeys.getImagePath(AssetsKeys.ON_BOARDING_IMG)),
         ),
         Text(
-          boardingItem.title,
+          boardingItem.title.tr(),
           style: context.textTheme.displayMedium,
         ),
         Text(
-          boardingItem.body,
+          boardingItem.body.tr(),
           style: context.textTheme.headlineSmall,
         ),
       ],

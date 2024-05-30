@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/values/lang_keys.dart';
 import '../../../domain/models/product_model.dart';
 import '../../../shared/constants.dart';
 import '../../layout/cubit/cubit.dart';
@@ -32,8 +34,8 @@ class HomeProductItem extends StatelessWidget {
                       color: Colors.red,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 6, vertical: 2),
-                      child: const Text(
-                        'Discount',
+                      child: Text(
+                        LangKeys.DISCOUNT.tr(),
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

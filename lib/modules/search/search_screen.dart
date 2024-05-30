@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_flutter/shared/constants.dart';
 import 'package:shop_app_flutter/shared/widgets/common_text_widget.dart';
 import 'package:shop_app_flutter/shared/widgets/custom_text_form_field.dart';
 
+import '../../core/values/lang_keys.dart';
 import '../favorites/favorite_item_widget.dart';
 import 'cubit/search_cubit.dart';
 import 'cubit/search_states.dart';
@@ -23,7 +25,7 @@ class SearchScreen extends StatelessWidget {
           SearchCubit searchCubit = SearchCubit.get(context);
           return Scaffold(
             appBar: AppBar(
-                title: const CommonTextWidget(text: 'Search'),
+                title: CommonTextWidget(text: LangKeys.SEARCH.tr()),
                 foregroundColor: Colors.black),
             body: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -32,10 +34,10 @@ class SearchScreen extends StatelessWidget {
                   CustomTextFormField(
                     controller: searchController,
                     textInputType: TextInputType.text,
-                    hintText: 'search',
+                    hintText: LangKeys.SEARCH_HINT.tr(),
                     prefixIcon: Icons.search,
                     onChanged: (value) {
-                      searchCubit.cancelRequestToken;
+                      searchCubit.cancelRequestToken();
                       searchCubit.getSearchResult(searchController.text);
                     },
                   ),

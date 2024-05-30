@@ -1,14 +1,19 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_flutter/core/utils/enums/toast_enum.dart';
 import 'package:shop_app_flutter/core/utils/extensions.dart';
+import 'package:shop_app_flutter/core/utils/navigation_services.dart';
 import 'package:shop_app_flutter/core/utils/validations.dart';
 import 'package:shop_app_flutter/shared/widgets/custom_material_botton_widget.dart';
 import 'package:shop_app_flutter/shared/widgets/custom_text_form_field.dart';
 
+import '../../core/values/constants.dart';
+import '../../core/values/lang_keys.dart';
 import '../../shared/constants.dart';
 import '../layout/cubit/cubit.dart';
 import '../layout/cubit/states.dart';
+import 'language_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   GlobalKey<FormState> settingsFormKey = GlobalKey<FormState>();
@@ -57,29 +62,29 @@ class SettingsScreen extends StatelessWidget {
                   Constants.vSpace(),
                   CustomTextFormField(
                     controller: nameController,
-                    hintText: 'Name',
+                    hintText: LangKeys.NAME.tr(),
                     prefixIcon: Icons.person,
                     textInputType: TextInputType.text,
                     validator: (value) =>
-                        validateIsEmpty(value, 'Name can\'t be empty'),
+                        validateIsEmpty(value, LangKeys.ENTER_YOUR_NAME.tr()),
                   ),
                   Constants.vSpace(),
                   CustomTextFormField(
                     controller: emailController,
-                    hintText: 'Email',
+                    hintText: LangKeys.EMAIL,
                     prefixIcon: Icons.email_outlined,
                     textInputType: TextInputType.emailAddress,
                     validator: (value) =>
-                        validateIsEmpty(value, 'Email can\'t be empty'),
+                        validateIsEmpty(value, LangKeys.ENTER_EMAIL.tr()),
                   ),
                   Constants.vSpace(),
                   CustomTextFormField(
                     controller: phoneController,
-                    hintText: 'Phone',
+                    hintText: LangKeys.PHONE.tr(),
                     prefixIcon: Icons.phone,
                     textInputType: TextInputType.phone,
-                    validator: (value) =>
-                        validateIsEmpty(value, 'Phone number can\'t be empty'),
+                    validator: (value) => validateIsEmpty(
+                        value, LangKeys.ENTER_PHONE_NUMBER.tr()),
                   ),
                   Constants.vSpace(),
                   CustomMaterialBotton(
@@ -88,7 +93,7 @@ class SettingsScreen extends StatelessWidget {
                       FocusScope.of(context).unfocus();
                     },
                     child: Text(
-                      'Log Out',
+                      LangKeys.LOGOUT.tr(),
                       style: context.textTheme.labelSmall!
                           .copyWith(color: Colors.white),
                     ),
@@ -105,7 +110,17 @@ class SettingsScreen extends StatelessWidget {
                       FocusScope.of(context).unfocus();
                     },
                     child: Text(
-                      'UPDATE',
+                      LangKeys.UPDATE.tr(),
+                      style: context.textTheme.labelSmall!
+                          .copyWith(color: Colors.white),
+                    ),
+                  ),
+                  Constants.vSpace(),
+                  CustomMaterialBotton(
+                    onPressed: () => NavigationServices.navigateTo(
+                        context, LanguageScreen()),
+                    child: Text(
+                      LangKeys.LANGUAGE.tr(),
                       style: context.textTheme.labelSmall!
                           .copyWith(color: Colors.white),
                     ),

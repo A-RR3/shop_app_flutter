@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_flutter/core/utils/navigation_services.dart';
+import 'package:shop_app_flutter/core/values/local_storage_keys.dart';
 import 'package:shop_app_flutter/modules/layout/shop_layout.dart';
 import 'package:shop_app_flutter/modules/register/register_screen.dart';
 import 'package:shop_app_flutter/shared/constants.dart';
@@ -12,6 +14,8 @@ import 'package:shop_app_flutter/shared/widgets/register_options_widget.dart';
 import '../../core/utils/enums/toast_enum.dart';
 import '../../core/utils/extensions.dart';
 import '../../core/utils/validations.dart';
+import '../../core/values/constants.dart';
+import '../../core/values/lang_keys.dart';
 import '../../shared/network/local/cache_helper.dart';
 import 'cubit/login_cubit.dart';
 import 'cubit/login_states.dart';
@@ -32,9 +36,10 @@ class LoginScreen extends StatelessWidget {
           if (state is LoginSuccessState) {
             if (state.profileModel.status) {
               CacheHelper.setData(
-                      key: 'token', value: state.profileModel.data?.token)
+                      key: LocalStorageKeys.ACCESS_TOKEN,
+                      value: state.profileModel.data?.token)
                   .then((value) {
-                token = CacheHelper.getData(key: 'token');
+                token = CacheHelper.getData(key: LocalStorageKeys.ACCESS_TOKEN);
                 showToast(
                     meg: state.profileModel.message!,
                     toastState: ToastStates.success);
@@ -60,10 +65,10 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const CommonTextWidget(text: 'LOGIN'),
+                        CommonTextWidget(text: LangKeys.LOGIN.tr()),
                         Constants.vSpace(),
                         Text(
-                          'Discover a world of products at your fingertips. Login and start shopping.',
+                          LangKeys.OPENING_STATEMENT.tr(),
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!
@@ -74,8 +79,8 @@ class LoginScreen extends StatelessWidget {
                           controller: userEmailController,
                           textInputType: TextInputType.emailAddress,
                           validator: (value) =>
-                              validateIsEmpty(value, 'Please enter your email'),
-                          hintText: 'User Email',
+                              validateIsEmpty(value, LangKeys.ENTER_EMAIL.tr()),
+                          hintText: LangKeys.USER_EMAIL.tr(),
                           prefixIcon: Icons.email,
                           border: const OutlineInputBorder(),
                           focusNode: loginCubit.emailFocus,
@@ -89,8 +94,8 @@ class LoginScreen extends StatelessWidget {
                           textInputType: TextInputType.visiblePassword,
                           obscureText: !loginCubit.isPasswordShown,
                           validator: (value) => validateIsEmpty(
-                              value, 'Please enter your password'),
-                          hintText: 'Password',
+                              value, LangKeys.ENTER_PASSWORD.tr()),
+                          hintText: LangKeys.USER_PASSWORD.tr(),
                           prefixIcon: Icons.lock_outline,
                           suffixIcon: IconButton(
                             onPressed: () {
@@ -118,15 +123,15 @@ class LoginScreen extends StatelessWidget {
                                   color: Colors.white,
                                 )
                               : Text(
-                                  'LOGIN',
+                                  LangKeys.LOGIN.tr(),
                                   style: context.textTheme.labelSmall!
                                       .copyWith(color: Colors.white),
                                 ),
                         ),
                         Constants.vSpace(),
                         RegisterOptions(
-                          question: 'You don\'t have account',
-                          action: 'REGISTER',
+                          question: LangKeys.DONT_HAVE_ACCOUNT.tr(),
+                          action: LangKeys.REGISTER.tr(),
                           onPressed: () {
                             NavigationServices.navigateTo(
                                 context, RegisterScreen(),
